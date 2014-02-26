@@ -31,15 +31,15 @@ After saving the profile you can see all the gravatars in the site has been repl
 
 With this you will get rid of the boredom of looking at the same gravatar all the time. With the change in the respective social media profile picture, the gravatar of your site will also change.
 
-You can see more, on how to install and use the plugin here in this blog [marutimohanty.wordpress.com](http://marutimohanty.wordpress.com/)
+You can see more, on how to install and use the plugin here in this blog [marutimohanty.wordpress.com](http://marutimohanty.wordpress.com/2014/02/25/wp-social-avatar/)
 
 
 == Installation ==
-1. Upload \"wp-social-avatar\" folder to the \"/wp-content/plugins/\" directory.
-2. Activate the plugin through the \"Plugins\" menu in WordPress.
+1. Upload "**wp-social-avatar**" folder to the "wp-content/**plugins**" directory.
+2. Activate the plugin through the "**Plugins**" menu in WordPress.
 
 == Frequently Asked Questions ==
-Faqs:--
+No FAQS yet
 
 == Screenshots ==
 1. Admin Settings screen
@@ -47,7 +47,7 @@ Faqs:--
 
 == Changelog ==
 = 1.0 =
-* Initial release.
+* First release.
 
 == Upgrade Notice ==
 1.0
