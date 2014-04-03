@@ -206,8 +206,21 @@ function wp_gplus_avatar( $avatar, $id_or_email, $size, $default, $alt ){
     
     if ( user_can( $user_id, $wp_avatar_capability ) ) {
         if ( 'wp-gplus' == $wp_avatar_profile && !empty( $wp_gplus_profile ) ) {
+            $url = 'http://picasaweb.google.com/data/entry/api/user/' . $wp_gplus_profile . '?alt=json';
+   
+            // Open connection
+            $ch = curl_init();
+            
+            // Make the curl call
+            curl_setopt( $ch, CURLOPT_URL, $url );
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            $results = curl_exec( $ch );
+            
+            $gplusdetails = json_decode( $results );
+            $gplus = $gplusdetails->entry->{'gphoto$thumbnail'}->{'$t'};
+            // Replacing it with the required size
+            $gplus = str_replace( 's64-c', "s{$size}-c", $gplus );
            
-            $gplus = 'https://plus.google.com/s2/photos/profile/' . $wp_gplus_profile; 
             $avatar = "<img alt='gplus-profile-picture' src='{$gplus}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
             
             return $avatar;
