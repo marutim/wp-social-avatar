@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Social Avatar
  * Description: This plugin gives the users the option to use their social profile picture as the WordPress Avatar
- * Version: 1.1
+ * Version: 1.2
  * Author: Maruti Mohanty
  * Author URI: http://marutimohanty.wordpress.com/
 */
@@ -206,7 +206,7 @@ function wp_gplus_avatar( $avatar, $id_or_email, $size, $default, $alt ){
     
     if ( user_can( $user_id, $wp_avatar_capability ) ) {
         if ( 'wp-gplus' == $wp_avatar_profile && !empty( $wp_gplus_profile ) ) {
-            $url = 'http://picasaweb.google.com/data/entry/api/user/' . $wp_gplus_profile . '?alt=json';
+            $url = 'https://www.googleapis.com/plus/v1/people/' . $wp_gplus_profile . '?fields=image&key=AIzaSyBrLkua-XeZh637G1T1J8DoNHK3Oqw81ao';
    
             // Open connection
             $ch = curl_init();
@@ -217,9 +217,10 @@ function wp_gplus_avatar( $avatar, $id_or_email, $size, $default, $alt ){
             $results = curl_exec( $ch );
             
             $gplusdetails = json_decode( $results );
-            $gplus = $gplusdetails->entry->{'gphoto$thumbnail'}->{'$t'};
+            $gplus = $gplusdetails->image->url;
+            
             // Replacing it with the required size
-            $gplus = str_replace( 's64-c', "s{$size}-c", $gplus );
+            $gplus = str_replace( 'sz=50', "sz={$size}", $gplus );
            
             $avatar = "<img alt='gplus-profile-picture' src='{$gplus}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
             
