@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Social Avatar
+ * Plugin URI: http://wordpress.org/plugins/wp-social-avatar/
  * Description: This plugin gives the users the option to use their social profile picture as the WordPress Avatar
  * Version: 1.2
  * Author: Maruti Mohanty
