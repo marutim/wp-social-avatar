@@ -12,12 +12,12 @@
  * Enqueue wp-avatar js file to user-edit and profile page only.
  *
  * @param void
- * 
+ *
  * @return void.
  */
 function wp_avatar_enqueue_scripts() {
     global $pagenow;
-    
+
     if ( 'profile.php' == $pagenow || 'user-edit.php' == $pagenow )
         wp_enqueue_script( 'wp-avatar.js', plugin_dir_url( __FILE__ ) . '/js/wp-avatar.js' );
 }
@@ -25,7 +25,7 @@ add_action( 'admin_enqueue_scripts', 'wp_avatar_enqueue_scripts' );
 
 /**
  * Add sub menu page to the Users or Profile menu.
- * 
+ *
  * @param void
  *
  * @return string The resulting page.
@@ -38,7 +38,7 @@ add_action( 'admin_menu', 'wp_avatar_users_menu' );
 function wp_avatar_admin() {
     // Get the WP avatar capability value
     $wp_avatar_capability = get_option( 'wp_avatar_capability', 'read' );
-    
+
     // WP Avatar settings section.
     $html = '';
     $html .= '<form id="wp-avatar-settings" method="post" action="">';
@@ -55,7 +55,7 @@ function wp_avatar_admin() {
     $html .= '</table>';
     $html .= '<p class="submit"><input type="submit" class="button button-primary" id="submit" value="Save Changes"></p>';
     $html .= '</form>';
-    
+
     echo $html;
 }
 
@@ -65,7 +65,7 @@ if( isset( $_POST['wp-avatar-capability'] ) )
 
 /**
  * Adds the WP Avatar section in the user profile page.
- * 
+ *
  * @param object $profileuser Contains the details of the current profile user
  *
  * @return string $html WP Avatar section in the user profile page
@@ -73,15 +73,15 @@ if( isset( $_POST['wp-avatar-capability'] ) )
 function wp_avatar_add_extra_profile_fields( $profileuser ) {
     // Get the WP avatar capability value
     $wp_avatar_capability = get_option( 'wp_avatar_capability', 'read' );
-    
+
     if ( ! current_user_can( $wp_avatar_capability ) )
         return;
-    
+
     // Getting the usermeta
     $wp_avatar_profile = get_user_meta( $profileuser->ID, 'wp_avatar_profile', true );
     $wp_fb_profile     = get_user_meta( $profileuser->ID, 'wp_fb_profile', true );
     $wp_gplus_profile  = get_user_meta( $profileuser->ID, 'wp_gplus_profile', true );
-    
+
     // WP Avatar section html in the user profile page.
     $html = '';
     $html .= '<h3>WP Avatar Options</h3>';
@@ -95,7 +95,7 @@ function wp_avatar_add_extra_profile_fields( $profileuser ) {
     $html .= '<tr><th><label for="use-gplus-profile">Use Google+ Profile as Avatar</label></th>';
     $html .= '<td><input type="checkbox" name="wp-avatar-profile" value="wp-gplus"' . checked( $wp_avatar_profile, 'wp-gplus', false ) . '></td></tr>';
     $html .= '</table>';
-    
+
     echo $html;
 }
 add_action( 'show_user_profile', 'wp_avatar_add_extra_profile_fields' );
@@ -103,7 +103,7 @@ add_action( 'edit_user_profile', 'wp_avatar_add_extra_profile_fields' );
 
 /**
  * Saving the WP Avatar details in the wp usermeta table.
- * 
+ *
  * @param int $user_id id of the current user.
  *
  * @return void
@@ -119,7 +119,7 @@ add_action( 'edit_user_profile_update', 'wp_avatar_save_extra_profile_fields' );
 
 /**
  * Replaces the default engravatar with the Facebook profile picture.
- * 
+ *
  * @param string $avatar The default avatar
  *
  * @param int $id_or_email The user id
@@ -128,18 +128,18 @@ add_action( 'edit_user_profile_update', 'wp_avatar_save_extra_profile_fields' );
  *
  * @param string $default The url of the Wordpress default avatar
  *
- * @param string $alt Alternate text for the avatar. 
+ * @param string $alt Alternate text for the avatar.
  *
  * @return string $avatar The modified avatar
  */
 function wp_fb_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
-    // Getting the user id.    
+    // Getting the user id.
     if( is_int( $id_or_email ) )
         $user_id = $id_or_email;
-    
+
     if( is_object( $id_or_email ) )
         $user_id = $id_or_email->user_id;
-        
+
     if( is_string( $id_or_email ) ) {
         $user = get_user_by( 'email', $id_or_email );
         if ( $user )
@@ -147,18 +147,18 @@ function wp_fb_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
         else
             $user_id = $id_or_email;
     }
-    
+
     // Getting the user details
     $wp_avatar_profile    = get_user_meta( $user_id, 'wp_avatar_profile', true );
     $wp_fb_profile        = get_user_meta( $user_id, 'wp_fb_profile', true );
     $wp_avatar_capability = get_option( 'wp_avatar_capability', 'read' );
-    
+
     if ( user_can( $user_id, $wp_avatar_capability ) ) {
         if ( 'wp-facebook' == $wp_avatar_profile && !empty( $wp_fb_profile ) ) {
-           
+
             $fb = 'https://graph.facebook.com/' . $wp_fb_profile . '/picture?width='. $size . '&height=' . $size;
             $avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
-            
+
             return $avatar;
         } else {
             return $avatar;
@@ -171,7 +171,7 @@ add_filter( 'get_avatar', 'wp_fb_avatar', 10, 5 );
 
 /**
  * Replaces the default engravatar with the Twitter profile picture
- * 
+ *
  * @param string $avatar The default avatar
  *
  * @param int $id_or_email The user id
@@ -180,18 +180,18 @@ add_filter( 'get_avatar', 'wp_fb_avatar', 10, 5 );
  *
  * @param string $default The url of the Wordpress default avatar
  *
- * @param string $alt Alternate text for the avatar. 
+ * @param string $alt Alternate text for the avatar.
  *
  * @return string $avatar The modified avatar
  */
 function wp_gplus_avatar( $avatar, $id_or_email, $size, $default, $alt ){
-    // Getting the user id.    
+    // Getting the user id.
     if( is_int( $id_or_email ) )
         $user_id = $id_or_email;
-    
+
     if( is_object( $id_or_email ) )
         $user_id = $id_or_email->user_id;
-        
+
     if( is_string( $id_or_email ) ) {
         $user = get_user_by( 'email', $id_or_email );
         if ( $user )
@@ -199,32 +199,28 @@ function wp_gplus_avatar( $avatar, $id_or_email, $size, $default, $alt ){
         else
             $user_id = $id_or_email;
     }
-    
+
     // Getting the user details
     $wp_avatar_profile    = get_user_meta( $user_id, 'wp_avatar_profile', true );
     $wp_gplus_profile     = get_user_meta( $user_id, 'wp_gplus_profile', true );
     $wp_avatar_capability = get_option( 'wp_avatar_capability', 'read' );
-    
+
     if ( user_can( $user_id, $wp_avatar_capability ) ) {
         if ( 'wp-gplus' == $wp_avatar_profile && !empty( $wp_gplus_profile ) ) {
             $url = 'https://www.googleapis.com/plus/v1/people/' . $wp_gplus_profile . '?fields=image&key=AIzaSyBrLkua-XeZh637G1T1J8DoNHK3Oqw81ao';
-   
-            // Open connection
-            $ch = curl_init();
             
-            // Make the curl call
-            curl_setopt( $ch, CURLOPT_URL, $url );
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            $results = curl_exec( $ch );
-            
-            $gplusdetails = json_decode( $results );
-            $gplus = $gplusdetails->image->url;
-            
-            // Replacing it with the required size
-            $gplus = str_replace( 'sz=50', "sz={$size}", $gplus );
-           
-            $avatar = "<img alt='gplus-profile-picture' src='{$gplus}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
-            
+            // Fetching the Gplus profile image.
+            $results = wp_remote_get( $url );
+
+            if ( 200 == $results['response']['code'] ) {
+                $gplusdetails = json_decode( $results['body'] );
+                $gplus = $gplusdetails->image->url;
+
+                // Replacing it with the required size
+                $gplus = str_replace( 'sz=50', "sz={$size}", $gplus );
+
+                $avatar = "<img alt='gplus-profile-picture' src='{$gplus}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+            }
             return $avatar;
         } else {
             return $avatar;
