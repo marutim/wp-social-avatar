@@ -3,7 +3,7 @@ Contributors: marutim
 Tags: social avatar, avatar, gravatar, social
 Requires at least: 3.3.1
 Tested up to: 3.9
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ No FAQS yet
 2. Profile Options screen
 
 == Changelog ==
+= 1.3 =
+* Opitimized the plugin
+
 = 1.2 =
 * Now Users can either use the Google plus user id or the new Google Plus handle for WP Social Avatar Google Plus option. 
 
@@ -56,4 +59,4 @@ No FAQS yet
 * First release.
 
 == Upgrade Notice ==
-1.2
+1.3
