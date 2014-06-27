@@ -2,8 +2,8 @@
 Contributors: marutim
 Tags: social avatar, avatar, gravatar, social
 Requires at least: 3.3.1
-Tested up to: 3.9
-Stable tag: 1.3
+Tested up to: 3.9.1
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,8 @@ After saving the profile you can see all the gravatars in the site has been repl
 
 With this you will get rid of the boredom of looking at the same gravatar all the time. With the change in the respective social media profile picture, the gravatar of your site will also change.
 
+With Version 1.4 Cache functionality is implemented for Google Plus avatar, this optimizes the functionality. I have added a clear cache button for Google plus, anytime you upload a new profile picture in your Google Plus account click the "clear cache" button and you will get the latest image else the code will make a request and pull the latest image after every 48 hours. This has been done to make the Google Plus functionality faster.
+
 You can see more, on how to install and use the plugin here in this blog [marutimohanty.wordpress.com](http://marutimohanty.wordpress.com/2014/02/25/wp-social-avatar/)
 
 
@@ -46,6 +48,10 @@ No FAQS yet
 2. Profile Options screen
 
 == Changelog ==
+= 1.4 =
+* Opitimized the Google Plus API call
+* Implemented cache functionality to improve the Google Plus Avatar functionality.
+
 = 1.3 =
 * Opitimized the plugin
 
@@ -59,4 +65,4 @@ No FAQS yet
 * First release.
 
 == Upgrade Notice ==
-1.3
+1.4
