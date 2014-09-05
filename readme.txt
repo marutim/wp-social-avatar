@@ -2,7 +2,7 @@
 Contributors: marutim
 Tags: social avatar, avatar, gravatar, social
 Requires at least: 3.3.1
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
