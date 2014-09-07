@@ -5,7 +5,7 @@
  * Description: This plugin gives the users the option to use their social profile picture as the WordPress Avatar
  * Version: 1.4
  * Author: Maruti Mohanty
- * Author URI: http://marutimohanty.wordpress.com/
+ * Author URI: http://www.sourcexpress.com/
 */
 
 /**
