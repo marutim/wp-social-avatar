@@ -11,6 +11,7 @@ This plugin gives the users the option to use their social profile picture as th
 
 == Description ==
 As the name suggests, this plugin allows you to use the social profile picture as your WordPress Avatar.
+You can see more, on how to install and use the plugin here in this blog [sourcexpress.com](http://www.sourcexpress.com/wp-social-avatar/)
 
 **Why this plugin?**
 
@@ -32,8 +33,6 @@ After saving the profile you can see all the gravatars in the site has been repl
 With this you will get rid of the boredom of looking at the same gravatar all the time. With the change in the respective social media profile picture, the gravatar of your site will also change.
 
 With Version 1.4 Cache functionality is implemented for Google Plus avatar, this optimizes the functionality. I have added a clear cache button for Google plus, anytime you upload a new profile picture in your Google Plus account click the "clear cache" button and you will get the latest image else the code will make a request and pull the latest image after every 48 hours. This has been done to make the Google Plus functionality faster.
-
-You can see more, on how to install and use the plugin here in this blog [sourcexpress.com](http://www.sourcexpress.com/wp-social-avatar/)
 
 
 == Installation ==
