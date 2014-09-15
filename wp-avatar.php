@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Social Avatar
- * Plugin URI: http://wordpress.org/plugins/wp-social-avatar/
+ * Plugin URI: http://www.sourcexpress.com/wp-social-avatar/
  * Description: This plugin gives the users the option to use their social profile picture as the WordPress Avatar
  * Version: 1.4
  * Author: Maruti Mohanty
@@ -84,7 +84,7 @@ function wp_avatar_add_extra_profile_fields( $profileuser ) {
 
 	// WP Avatar section html in the user profile page.
 	$html  = '';
-	$html .= '<h3>WP Avatar Options</h3>';
+	$html .= '<h3>' . apply_filters( 'wp_social_avatar_heading', 'WP Avatar Options' ) . '</h3>';
 	$html .= '<table class="form-table">';
 	$html .= '<tr><th><label for="facebook-profile">Facebook Handle</label></th>';
 	$html .= '<td><input type="text" name="fb-profile" id="fb-profile" value="' . $wp_fb_profile . '" class="regular-text" /></td>';
