@@ -11,7 +11,7 @@ This plugin gives the users the option to use their social profile picture as th
 
 == Description ==
 As the name suggests, this plugin allows you to use the social profile picture as your WordPress Avatar.
-You can see more, on how to install and use the plugin here in this blog [sourcexpress.com](http://www.sourcexpress.com/wp-social-avatar/)
+You can see more, on how to install and use the plugin here in this blog [WP Social Avatar](http://www.sourcexpress.com/wp-social-avatar/)
 
 **Why this plugin?**
 
