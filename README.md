@@ -1,11 +1,11 @@
 # WP Social Avatar
-Contributors: marutim
-Tags: social avatar, avatar, gravatar, social
-Requires at least: 3.3.1
-Tested up to: 4.0
-Stable tag: 1.4.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Contributors: marutim
+* Tags: social avatar, avatar, gravatar, social
+* Requires at least: 3.3.1
+* Tested up to: 4.0.1
+* Stable tag: 1.4.1
+* License: GPLv2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin gives the users the option to use their social profile picture as the WordPress Avatar
 
@@ -42,7 +42,7 @@ With Version 1.4 Cache functionality is implemented for Google Plus avatar, this
 ## Frequently Asked Questions
 No FAQS yet
 
-### Changelog ==
+### Changelog
 #### 1.4.1 
 * Introduced wp_social_avatar_heading filter
 
