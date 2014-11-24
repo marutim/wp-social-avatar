@@ -1,5 +1,5 @@
 # WP Social Avatar
-* Contributors: marutim
+* Contributors: [marutim](https://profiles.wordpress.org/marutim)
 * Tags: social avatar, avatar, gravatar, social
 * Requires at least: 3.3.1
 * Tested up to: 4.0.1
