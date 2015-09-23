@@ -157,14 +157,33 @@ function wp_fb_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 
 	if ( user_can( $user_id, $wp_avatar_capability ) ) {
 		if ( 'wp-facebook' == $wp_avatar_profile && ! empty( $wp_fb_profile ) ) {
+			if ( false === ( $fb = get_transient( "wp_social_avatar_fb_{$user_id}" ) ) ) {
+				$url = 'https://graph.facebook.com/v2.4/' . $wp_fb_profile . '/picture';
+				// Fetching the Facebook profile image.
+				$response = wp_remote_head( $url );
+				if( is_array( $response ) ) $results = $response['headers']['location'];
 
-			$fb     = 'https://graph.facebook.com/' . $wp_fb_profile . '/picture?width='. $size . '&height=' . $size;
-			$avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				// Checking for WP Errors
+				if ( ! is_wp_error( $results ) ) {
+					$fbdetails = $results;
+					$fb        = $fbdetails;
 
-			return $avatar;
+					// Setting Facebook url for 48 Hours
+					set_transient( "wp_social_avatar_facebook_{$user_id}", $fb, 48 * HOUR_IN_SECONDS );
+
+					// Replacing it with the required size
+					$fb = str_replace( 'sz=50', "sz={$size}", $fb );
+
+					$avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				}
+			}
 		} else {
-			return $avatar;
+			// Replacing Facebook url with the required size
+			$fb = str_replace( 'sz=50', "sz={$size}", $fb );
+
+			$avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 		}
+		return $avatar;
 	} else {
 		return $avatar;
 	}

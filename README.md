@@ -3,7 +3,7 @@
 * Tags: social avatar, avatar, gravatar, social
 * Requires at least: 3.3.1
 * Tested up to: 4.1
-* Stable tag: 1.4.1
+* Stable tag: 1.4.2
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,10 @@ With Version 1.4 Cache functionality is implemented for Google Plus avatar, this
 
 ## Frequently Asked Questions
 No FAQS yet
+
+### Changelog
+#### 1.4.2
+* Fixed invalid url format for getting facebook profile picture
 
 ### Changelog
 #### 1.4.1 
