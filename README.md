@@ -24,7 +24,7 @@ After activating the plugin admin will see **WP Avatar**, under Users menu. Here
 
 The allowed users will see the available options in their **Your Profile** sub menu under Users menu.
 
-For the first version I only have two social options available, Facebook and Google plus. You need to add either the Facebook handle or Google plus id in the corresponding fields.
+For the first version I only have two social options available, Facebook and Google plus. You need to add either the Facebook user ID(numeric) or Google plus id in the corresponding fields. [You can find your facebook user id here](http://findmyfacebookid.com/).
 
 Once done with the above, check the social profile picture you want to use as the gravatar and click Update Profile and you are done.
 
