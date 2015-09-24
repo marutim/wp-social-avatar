@@ -3,7 +3,7 @@
  * Plugin Name: WP Social Avatar
  * Plugin URI: http://www.sourcexpress.com/wp-social-avatar/
  * Description: This plugin gives the users the option to use their social profile picture as the WordPress Avatar
- * Version: 1.4.1
+ * Version: 1.5
  * Author: Maruti Mohanty
  * Author URI: http://www.sourcexpress.com/
 */
@@ -56,6 +56,36 @@ function wp_avatar_admin() {
 	$html .= '<p class="submit"><input type="submit" class="button button-primary" id="submit" value="Save Changes"></p>';
 	$html .= '</form>';
 
+	$html .= '<div id="postbox-container" class="postbox-container widefat fixed">';
+
+	$html .= '<div class="postbox">';
+	$html .= '<div class="handlediv"><br></div>';
+	$html .= '<h3 class="hndle" style="text-align: center;">';
+	$html .= '<span>Developer</span>';
+	$html .= '</h3>';
+
+	$html .= '<div class="inside">';
+	$html .= '<div style="text-align: center; margin: auto">Made with lots of love by <br> <a href="http://www.sourcexpress.com/ target="_blank""><strong>Maruti Mohanty</strong></a></div>';
+	$html .= '</div>';
+	$html .= '</div>';
+
+	$html .= '<div class="postbox">';
+	$html .= '<div class="handlediv"><br></div>';
+	$html .= '<h3 class="hndle" style="text-align: center;">';
+	$html .= '<span>Support Plugin</span>';
+	$html .= '</h3><div class="inside">';
+	$html .= '<div style="text-align: center; margin: auto">';
+	$html .= '<p>Is this plugin useful for you? If so, please help support its ongoing development and improvement with a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=marutimohanty89@gmail.com&item_name=WP%20Social%20Avatar" target="_blank">donation</a>.</p>';
+	$html .= '<p>Or, if you are short on funds, there are other ways you can help out:</p>';
+	$html .= '<ul>';
+	$html .= '<li>Leave a positive review on the plugin\'s <a href="https://wordpress.org/support/view/plugin-reviews/wp-social-avatar" target="_blank">WordPress listing</a></li>';
+	$html .= '<li>Vote "Works" on the plugin\'s <a href="https://wordpress.org/plugins/wp-social-avatar/#compatibility" target="_blank">WordPress listing</a></li>';
+	$html .= '<li><a href="http://twitter.com/home?status=I%20love%20this%20WordPress%20plugin!%20http://wordpress.org/plugins/wp-social-avatar/ @sourcexpress" target="_blank">Share your thoughts on Twitter</a></li>';
+	$html .= '</ul></div>';
+	$html .= '</div>';
+	$html .= '</div>';
+	$html .= '</div>';
+
 	echo $html;
 }
 
@@ -86,8 +116,9 @@ function wp_avatar_add_extra_profile_fields( $profileuser ) {
 	$html  = '';
 	$html .= '<h3>' . apply_filters( 'wp_social_avatar_heading', 'WP Avatar Options' ) . '</h3>';
 	$html .= '<table class="form-table">';
-	$html .= '<tr><th><label for="facebook-profile">Facebook Handle</label></th>';
-	$html .= '<td><input type="text" name="fb-profile" id="fb-profile" value="' . $wp_fb_profile . '" class="regular-text" /></td>';
+	$html .= '<tr><th><label for="facebook-profile">Facebook User ID(numeric)</label></th>';
+	$html .= '<td><input type="text" name="fb-profile" id="fb-profile" value="' . $wp_fb_profile . '" class="regular-text" />&nbsp;&nbsp;';
+	$html .= '<span><a href="http://findmyfacebookid.com/" target="_blank">Find your facebook id here</a></span></td>';
 	$html .= '<tr><th><label for="use-fb-profile">Use Facebook Profile as Avatar</label></th>';
 	$html .= '<td><input type="checkbox" name="wp-avatar-profile" value="wp-facebook" ' . checked( $wp_avatar_profile, 'wp-facebook', false ) . '></td></tr>';
 	$html .= '<tr><th><label for="gplus-profile">Google+ id</label></th>';
@@ -112,9 +143,9 @@ add_action( 'edit_user_profile', 'wp_avatar_add_extra_profile_fields' );
  */
 function wp_avatar_save_extra_profile_fields( $user_id ) {
 	// Saving the WP Avatar details.
-	update_usermeta( $user_id, 'wp_fb_profile', trim( $_POST['fb-profile'] ) );
-	update_usermeta( $user_id, 'wp_gplus_profile', trim( $_POST['gplus-profile'] ) );
-	update_usermeta( $user_id, 'wp_avatar_profile', $_POST['wp-avatar-profile'] );
+	update_user_meta( $user_id, 'wp_fb_profile', trim( $_POST['fb-profile'] ) );
+	update_user_meta( $user_id, 'wp_gplus_profile', trim( $_POST['gplus-profile'] ) );
+	update_user_meta( $user_id, 'wp_avatar_profile', $_POST['wp-avatar-profile'] );
 }
 add_action( 'personal_options_update', 'wp_avatar_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'wp_avatar_save_extra_profile_fields' );
@@ -213,19 +244,19 @@ function wp_gplus_avatar( $avatar, $id_or_email, $size, $default, $alt ){
 				$url = 'https://www.googleapis.com/plus/v1/people/' . $wp_gplus_profile . '?fields=image&key=AIzaSyBrLkua-XeZh637G1T1J8DoNHK3Oqw81ao';
 				// Fetching the Gplus profile image.
 				$results = wp_remote_get( $url, array( 'timeout' => -1 ) );
-				
+
 				// Checking for WP Errors
 				if ( ! is_wp_error( $results ) ) {
 					if ( 200 == $results['response']['code'] ) {
 						$gplusdetails = json_decode( $results['body'] );
 						$gplus        = $gplusdetails->image->url;
-						
+
 						// Setting Gplus url for 48 Hours
 						set_transient( "wp_social_avatar_gplus_{$user_id}", $gplus, 48 * HOUR_IN_SECONDS );
-		
+
 						// Replacing it with the required size
 						$gplus = str_replace( 'sz=50', "sz={$size}", $gplus );
-		
+
 						$avatar = "<img alt='gplus-profile-picture' src='{$gplus}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 					}
 				}
@@ -255,10 +286,10 @@ add_filter( 'get_avatar', 'wp_gplus_avatar', 10, 5 );
 function wp_social_avatar_gplus_clear_cache() {
 	// Fetch the current user id
 	$user_id = sanitize_text_field( $_POST['user_id'] );
-	
+
 	// Delete transient for the particular user
 	$delete_transient = delete_transient( "wp_social_avatar_gplus_{$user_id}" );
-	
+
 	echo $delete_transient;
 	die();
 }

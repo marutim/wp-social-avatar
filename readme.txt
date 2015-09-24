@@ -1,15 +1,17 @@
 === WP Social Avatar ===
 Contributors: marutim
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=marutimohanty89@gmail.com&item_name=WP%20Social%20Avatar
 Tags: social avatar, avatar, gravatar, social
 Requires at least: 3.3.1
-Tested up to: 4.1
-Stable tag: 1.4.1
+Tested up to: 4.3
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin gives the users the option to use their social profile picture as the WordPress Avatar
 
 == Description ==
+
 As the name suggests, this plugin allows you to use the social profile picture as your WordPress Avatar.
 You can see more, on how to install and use the plugin here in this blog [WP Social Avatar](http://www.sourcexpress.com/wp-social-avatar/)
 
@@ -24,7 +26,7 @@ After activating the plugin admin will see **WP Avatar**, under Users menu. Here
 
 The allowed users will see the available options in their **Your Profile** sub menu under Users menu.
 
-For the first version I only have two social options available, Facebook and Google plus. You need to add either the Facebook handle or Google plus id in the corresponding fields.
+For the first version I only have two social options available, Facebook and Google plus. You need to add either the Facebook user ID(numeric) or Google plus id in the corresponding fields. [You can find your facebook user id here](http://findmyfacebookid.com/)
 
 Once done with the above, check the social profile picture you want to use as the gravatar and click Update Profile and you are done.
 
@@ -47,6 +49,9 @@ No FAQS yet
 2. Profile Options screen
 
 == Changelog ==
+= 1.5 =
+* Made changes due to change in Facebook APIs. Now you need to use facebook user id instead of facebook handle/username.
+
 = 1.4.1 =
 * Introduced wp_social_avatar_heading filter
 
@@ -67,4 +72,4 @@ No FAQS yet
 * First release.
 
 == Upgrade Notice ==
-1.4.1
+1.5

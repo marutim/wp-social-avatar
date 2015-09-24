@@ -2,8 +2,8 @@
 * Contributors: [marutim](https://profiles.wordpress.org/marutim)
 * Tags: social avatar, avatar, gravatar, social
 * Requires at least: 3.3.1
-* Tested up to: 4.1
-* Stable tag: 1.4.1
+* Tested up to: 4.3.1
+* Stable tag: 1.5
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ With Version 1.4 Cache functionality is implemented for Google Plus avatar, this
 No FAQS yet
 
 ### Changelog
+#### 1.5
+* Made changes due to change in Facebook APIs. Now you need to use facebook user id instead of facebook handle/username.
+
 #### 1.4.1 
 * Introduced wp_social_avatar_heading filter
 
