@@ -121,6 +121,8 @@ function wp_avatar_add_extra_profile_fields( $profileuser ) {
 	$html .= '<span><a href="http://findmyfacebookid.com/" target="_blank">Find your facebook id here</a></span></td>';
 	$html .= '<tr><th><label for="use-fb-profile">Use Facebook Profile as Avatar</label></th>';
 	$html .= '<td><input type="checkbox" name="wp-avatar-profile" value="wp-facebook" ' . checked( $wp_avatar_profile, 'wp-facebook', false ) . '></td></tr>';
+	$html .= '<tr><th><label for="fb-clear-cache">Clear Facebook Cache</label></th>';
+	$html .= '<td><input type="button" name="wp-fb-clear" value="Clear Cache" user="' . $profileuser->ID . '"><span id="msg"></span></td></tr>';
 	$html .= '<tr><th><label for="gplus-profile">Google+ id</label></th>';
 	$html .= '<td><input type="text" name="gplus-profile" id="gplus-profile" value="' . $wp_gplus_profile . '" class="regular-text" /></td></tr>';
 	$html .= '<tr><th><label for="use-gplus-profile">Use Google+ Profile as Avatar</label></th>';
@@ -188,19 +190,58 @@ function wp_fb_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 
 	if ( user_can( $user_id, $wp_avatar_capability ) ) {
 		if ( 'wp-facebook' == $wp_avatar_profile && ! empty( $wp_fb_profile ) ) {
+			if ( false === ( $fb = get_transient( "wp_social_avatar_fb_{$user_id}" ) ) ) {
+				$url = 'https://graph.facebook.com/v2.4/' . $wp_fb_profile . '/picture';
+				// Fetching the Facebook profile image.
+				$response = wp_remote_head( $url );
+				if( is_array( $response ) ) $results = $response['headers']['location'];
 
-			$fb     = 'https://graph.facebook.com/' . $wp_fb_profile . '/picture?width='. $size . '&height=' . $size;
-			$avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				// Checking for WP Errors
+				if ( ! is_wp_error( $results ) ) {
+					$fbdetails = $results;
+					$fb        = $fbdetails;
 
-			return $avatar;
+					// Setting Facebook url for 48 Hours
+					set_transient( "wp_social_avatar_facebook_{$user_id}", $fb, 48 * HOUR_IN_SECONDS );
+
+					// Replacing it with the required size
+					$fb = str_replace( 'sz=50', "sz={$size}", $fb );
+
+					$avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+				}
+			}
 		} else {
-			return $avatar;
+			// Replacing Facebook url with the required size
+			$fb = str_replace( 'sz=50', "sz={$size}", $fb );
+
+			$avatar = "<img alt='facebook-profile-picture' src='{$fb}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 		}
+		return $avatar;
 	} else {
 		return $avatar;
 	}
 }
 add_filter( 'get_avatar', 'wp_fb_avatar', 10, 5 );
+
+/**
+ * Deletes the transient for a Facebook for the respective user
+ *
+ * @param void
+ *
+ * @return boolean $delete_transient True if the transients gets deleted
+ */
+function wp_social_avatar_fb_clear_cache() {
+	// Fetch the current user id
+	$user_id = sanitize_text_field( $_POST['user_id'] );
+
+	// Delete transient for the particular user
+	$delete_transient = delete_transient( "wp_social_avatar_fb_{$user_id}" );
+
+	echo $delete_transient;
+	die();
+}
+add_action( 'wp_ajax_wp_social_avatar_fb_clear_cache', 'wp_social_avatar_fb_clear_cache' );
+add_action( 'wp_ajax_nopriv_wp_social_avatar_fb_clear_cache', 'wp_social_avatar_fb_clear_cache' );
 
 /**
  * Replaces the default engravatar with the Twitter profile picture
